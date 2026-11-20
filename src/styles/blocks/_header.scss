@@ -1,0 +1,322 @@
+@use "../helpers" as *;
+@use "../variables" as *;
+
+.header {
+  --offset-x: #{to-rem(140)};
+  --menu-width: #{to-rem(328)};
+
+  position: relative;
+  background-image: linear-gradient(
+    90deg,
+    $light-btn-color 50%,
+    $primary-color 50%
+  );
+  overflow: hidden;
+
+  @include respond-to("tablet") {
+    background-image: none;
+    background-color: $light-btn-color;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 1;
+    max-width: to-rem(1440);
+    margin: 0 auto;
+    padding: 0;
+
+    @include respond-to("tablet") {
+      padding: 0 to-rem(15);
+    }
+  }
+
+  &__top {
+    position: absolute;
+    top: to-rem(72);
+    left: var(--offset-x);
+    right: calc(var(--menu-width) - #{to-rem(78)});
+    z-index: 10;
+    @include flex(row, space-between, center);
+
+    @include respond-to("tablet") {
+      top: to-rem(20);
+      left: to-rem(15);
+      right: to-rem(15);
+    }
+  }
+
+  &__controls {
+    @include flex(row, flex-end, center, to-rem(24));
+  }
+
+  &__main {
+    display: grid;
+    grid-template-columns: to-rem(382) 1fr var(--menu-width);
+    align-items: center;
+    height: to-rem(768);
+
+    @include respond-to("tablet") {
+      grid-template-columns: 1fr;
+      gap: to-rem(24);
+      min-height: auto;
+      padding-top: to-rem(90);
+      padding-bottom: to-rem(40);
+    }
+  }
+
+  &__title {
+    position: relative;
+    z-index: 3;
+    grid-column: 1 / 3;
+    grid-row: 1;
+    justify-self: start;
+    align-self: end;
+    margin-left: var(--offset-x);
+    margin-bottom: to-rem(64);
+    font-family: $second-family;
+    font-size: fluid(54, 32);
+    font-weight: 900;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    color: $primary-color;
+    pointer-events: none;
+
+    @include respond-to("tablet") {
+      grid-column: 1;
+      margin-left: 0;
+      margin-bottom: 0;
+      font-size: fluid(42, 28);
+      order: 2;
+    }
+
+    &--accent {
+      display: inline-block;
+      background-color: $accent-color;
+      color: $light-btn-color;
+      padding: 0 to-rem(16);
+      margin-left: to-rem(-16);
+
+      @include respond-to("tablet") {
+        padding: to-rem(2) to-rem(12);
+        margin-left: 0;
+      }
+    }
+  }
+
+  &__media {
+    position: relative;
+    z-index: 1;
+    grid-column: 2 / 3;
+    grid-row: 1;
+    height: 100%;
+
+    @include respond-to("tablet") {
+      grid-column: 1;
+      aspect-ratio: 16 / 10;
+      height: auto;
+      order: 1;
+    }
+
+    .header__video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    &.is-playing {
+      .play-btn {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+  }
+
+  &__nav {
+    grid-column: 3 / 4;
+    grid-row: 1;
+    padding-left: to-rem(56);
+    z-index: 2;
+
+    @include respond-to("tablet") {
+      position: fixed;
+      top: to-rem(65);
+      left: 0;
+      right: 0;
+      background-color: $white-color;
+      border-bottom: 1px solid $dark-grey-color;
+      box-shadow: 0 to-rem(15) to-rem(30) rgba(61, 79, 159, 0.08);
+      padding: to-rem(32) to-rem(20) to-rem(40);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(to-rem(-12));
+      transition:
+        opacity $transition-duration ease,
+        transform $transition-duration ease,
+        visibility $transition-duration ease;
+      z-index: 99;
+
+      &.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  &__burger {
+    display: none;
+
+    @include respond-to("tablet") {
+      @include flex(column, space-between, center);
+      width: to-rem(30);
+      height: to-rem(20);
+      background: transparent;
+      border: none;
+      z-index: 100;
+      padding: 0;
+
+      span {
+        display: block;
+        width: 100%;
+        height: to-rem(2);
+        background-color: $accent-color;
+        transition:
+          transform $transition-duration ease-in-out,
+          opacity $transition-duration ease-in-out;
+        transform-origin: center;
+      }
+
+      &.is-open {
+        span:nth-child(1) {
+          transform: translateY(to-rem(9)) rotate(45deg);
+        }
+        span:nth-child(2) {
+          opacity: 0;
+        }
+        span:nth-child(3) {
+          transform: translateY(to-rem(-9)) rotate(-45deg);
+        }
+      }
+    }
+  }
+}
+
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  width: to-rem(54);
+  height: to-rem(54);
+  border-radius: 50%;
+  background-color: $white-color;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 to-rem(4) to-rem(24) rgba(0, 0, 0, 0.25);
+  transition:
+    transform $transition-duration ease,
+    box-shadow $transition-duration ease,
+    opacity $transition-duration ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 53%;
+    transform: translate(-50%, -50%);
+    border-style: solid;
+    border-width: to-rem(8) 0 to-rem(8) to-rem(14);
+    border-color: transparent transparent transparent $accent-color;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: to-rem(-8);
+    border-radius: 50%;
+    border: 1px solid rgba($white-color, 0.5);
+    opacity: 0;
+    transform: scale(0.9);
+    transition:
+      opacity $transition-duration ease,
+      transform $transition-duration ease;
+  }
+
+  @include hover {
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 0 to-rem(8) to-rem(30) rgba(0, 0, 0, 0.35);
+
+    &::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    &:active {
+      transform: translate(-50%, -50%) scale(0.96);
+    }
+  }
+}
+
+.cart-btn {
+  position: relative;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: to-rem(4);
+
+  &__count {
+    position: absolute;
+    top: to-rem(-4);
+    right: to-rem(-6);
+    width: to-rem(20);
+    height: to-rem(20);
+    border-radius: 50%;
+    background-color: $accent-color;
+    color: $white-color;
+    font-size: to-rem(12);
+    font-weight: 700;
+    @include flex(row, center, center);
+  }
+}
+
+.nav {
+  &__list {
+    @include flex(column, flex-start, flex-start, to-rem(28));
+
+    @include respond-to("tablet") {
+      align-items: center;
+      gap: to-rem(20);
+      text-align: center;
+    }
+  }
+
+  &__link {
+    font-family: $font-family;
+    font-weight: 300;
+    font-size: to-rem(16);
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+    color: $light-grey-color;
+    transition: color $transition-duration ease;
+
+    @include respond-to("tablet") {
+      color: $primary-color;
+    }
+
+    @include hover {
+      color: $accent-color;
+    }
+
+    &.is-active {
+      font-weight: 700;
+
+      @include respond-to("tablet") {
+        color: $accent-color;
+      }
+    }
+  }
+}

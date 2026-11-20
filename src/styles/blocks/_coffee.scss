@@ -1,0 +1,211 @@
+@use "sass:color";
+@use "../helpers" as *;
+@use "../variables" as *;
+
+.btn {
+  @include flex(row, center, center, null, null, true);
+  padding: to-rem(8) to-rem(18);
+  border-radius: to-rem(19);
+  font-family: $font-family;
+  font-size: to-rem(16);
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  &--accent {
+    background-color: $accent-color;
+    color: $light-btn-color;
+
+    @include hover {
+      background-color: color.adjust($accent-color, $lightness: -8%);
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: $primary-color;
+    padding-inline: to-rem(10);
+
+    @include hover {
+      color: $accent-color;
+    }
+  }
+}
+
+.slider-arrow {
+  @include flex(row, center, center);
+  width: to-rem(48);
+  height: to-rem(48);
+  border-radius: 50%;
+  background-color: $accent-color;
+  color: $white-color;
+  box-shadow: 0 to-rem(4) to-rem(16) rgba(0, 0, 0, 0.15);
+  z-index: 10;
+
+  @include hover {
+    background-color: color.adjust($accent-color, $lightness: -8%);
+    transform: scale(1.06);
+  }
+
+  &:disabled,
+  &.swiper-button-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+
+.coffee {
+  position: relative;
+  padding-block: fluid(88, 56) fluid(128, 64);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 26.5%;
+    background-color: $primary-color;
+    z-index: 0;
+
+    @include respond-to("tablet") {
+      width: 35%;
+    }
+
+    @include respond-to("mobile") {
+      display: none;
+    }
+  }
+
+  &__header {
+    position: relative;
+    z-index: 1;
+    margin-bottom: fluid(72, 40);
+  }
+
+  &__slider-wrapper {
+    position: relative;
+    z-index: 1;
+    padding-left: fluid(128, 0);
+
+    @include respond-to("desktop-sm") {
+      padding-left: 0;
+    }
+  }
+
+  &__slider {
+    height: to-rem(574);
+    padding: to-rem(16);
+    margin: to-rem(-16);
+    margin-right: calc((100vw - 100%) / -2);
+
+    @include respond-to("tablet") {
+      margin-right: to-rem(-10);
+      padding-right: to-rem(24);
+    }
+
+    @include respond-to("tablet-sm") {
+      height: auto;
+      margin-right: to-rem(-10);
+    }
+  }
+
+  &__slide {
+    height: calc((100% - #{to-rem(30)}) / 2);
+
+    transition: opacity $transition-duration ease;
+
+    @include respond-to("tablet-sm") {
+      height: auto;
+    }
+  }
+
+  &__next {
+    position: absolute;
+    top: 50%;
+    right: to-rem(24);
+    transform: translateY(-50%);
+
+    @include hover {
+      transform: translateY(-50%) scale(1.06);
+    }
+
+    @include respond-to("mobile") {
+      position: static;
+      transform: none;
+      margin: to-rem(24) auto 0;
+
+      @include hover {
+        transform: scale(1.06);
+      }
+    }
+  }
+}
+
+.product-card {
+  display: grid;
+  grid-template-columns: to-rem(235) 1fr;
+  height: 100%;
+  background-color: $white-color;
+  box-shadow: $shadow;
+  transition:
+    box-shadow $transition-duration ease,
+    transform $transition-duration ease;
+
+  @include hover {
+    box-shadow: 0 to-rem(8) to-rem(32) rgba(65, 81, 103, 0.16);
+  }
+
+  @include respond-to("tablet-sm") {
+    grid-template-columns: to-rem(180) 1fr;
+  }
+
+  @include respond-to("mobile") {
+    grid-template-columns: 1fr;
+  }
+
+  &__img-wrap {
+    @include flex(row, center, center);
+    background-color: $light-grey-color;
+    padding: to-rem(16);
+
+    img {
+      max-height: to-rem(224);
+      width: auto;
+      object-fit: contain;
+    }
+  }
+
+  &__body {
+    @include flex(column, space-between, flex-start);
+    padding: fluid(42, 24);
+  }
+
+  &__price {
+    @include fluid-text(20, 18, 1.2);
+    font-weight: 600;
+    color: $accent-color;
+    margin-bottom: to-rem(8);
+  }
+
+  &__title {
+    @include fluid-text(24, 20, 1.17);
+    font-weight: 700;
+    color: $dark-grey-color;
+    margin-bottom: to-rem(24);
+  }
+
+  &__desc {
+    font-size: to-rem(16);
+    font-weight: 300;
+    line-height: 1.4;
+    color: $dark-grey-color;
+    margin-bottom: to-rem(18);
+  }
+
+  &__actions {
+    @include flex(row, flex-start, center, to-rem(18), wrap);
+    margin-top: auto;
+  }
+}

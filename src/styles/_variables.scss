@@ -1,0 +1,27 @@
+@use "helpers/functions" as *;
+
+// Сетка
+$container-width: 1440;
+$container-padding-x: 15;
+
+// Анимации
+$transition-duration: 0.3s;
+$transition-base: all $transition-duration ease-in-out;
+
+// Шрифты
+$font-family: "NunitoSans", sans-serif;
+$second-family: "Montserrat", sans-serif;
+
+// ==========================================================================
+// ЦВЕТОВАЯ ПАЛИТРА (UI-KIT) — ПРОЕКТ REVO
+// ==========================================================================
+
+$white-color: #fff;
+$primary-color: #415167;
+$dark-grey-color: #151d28;
+$light-grey-color: #edf0f5;
+$accent-color: #c7a17a;
+$accent-hover-color: #f9f5e8;
+$light-btn-color: #f9fbff;
+
+$shadow: 0 4px 24px 0 rgba(205, 205, 205, 0.5);

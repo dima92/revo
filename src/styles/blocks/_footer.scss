@@ -1,0 +1,16 @@
+@use "../helpers" as *;
+@use "../variables" as *;
+
+.footer {
+  padding-block: to-rem(20);
+  background-color: $light-grey-color;
+  text-align: center;
+
+  &__copy {
+    font-size: to-rem(16);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    color: $primary-color;
+  }
+}

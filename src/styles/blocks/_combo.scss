@@ -1,0 +1,152 @@
+@use "../helpers" as *;
+@use "../variables" as *;
+
+.combo {
+  position: relative;
+  padding-block: fluid(88, 56) fluid(128, 64);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 23.5%;
+    background-color: $primary-color;
+    z-index: 0;
+
+    @include respond-to("tablet") {
+      width: 30%;
+    }
+
+    @include respond-to("mobile") {
+      display: none;
+    }
+  }
+
+  &__header {
+    position: relative;
+    z-index: 1;
+    margin-bottom: fluid(64, 40);
+  }
+
+  &__slider-wrapper {
+    position: relative;
+    z-index: 1;
+    padding-left: fluid(128, 0);
+
+    @include respond-to("desktop-sm") {
+      padding-left: 0;
+    }
+  }
+
+  &__slider {
+    padding: to-rem(16);
+    margin: to-rem(-16);
+    margin-right: calc((100vw - 100%) / -2);
+    padding-right: to-rem(80);
+
+    @include respond-to("tablet") {
+      margin-right: to-rem(-10);
+      padding-right: to-rem(24);
+    }
+  }
+
+  &__slide {
+    height: auto;
+  }
+
+  &__next {
+    position: absolute;
+    top: 50%;
+    right: to-rem(24);
+    transform: translateY(-50%);
+
+    @include hover {
+      transform: translateY(-50%) scale(1.06);
+    }
+
+    @include respond-to("mobile") {
+      position: static;
+      transform: none;
+      margin: to-rem(24) auto 0;
+
+      @include hover {
+        transform: scale(1.06);
+      }
+    }
+  }
+}
+
+.combo-card {
+  @include flex(column, flex-start, stretch);
+  height: 100%;
+  background-color: $white-color;
+  box-shadow: $shadow;
+  transition:
+    box-shadow $transition-duration ease,
+    transform $transition-duration ease;
+
+  @include hover {
+    box-shadow: 0 to-rem(8) to-rem(32) rgba(65, 81, 103, 0.16);
+  }
+
+  &__img-wrap {
+    @include flex(row, center, center);
+    background-color: $light-grey-color;
+    aspect-ratio: 360 / 300;
+    padding: to-rem(20);
+
+    img {
+      max-height: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+  }
+
+  &__body {
+    @include flex(column, space-between, flex-start);
+    flex-grow: 1;
+    padding: fluid(42, 24);
+  }
+
+  &__prices {
+    @include flex(row, flex-start, baseline, to-rem(16));
+    margin-bottom: to-rem(8);
+  }
+
+  &__price {
+    @include fluid-text(20, 18, 1.2);
+    font-weight: 600;
+    color: $accent-color;
+  }
+
+  &__old-price {
+    font-size: to-rem(14);
+    font-weight: 300;
+    font-style: italic;
+    color: $primary-color;
+    text-decoration: line-through;
+  }
+
+  &__title {
+    @include fluid-text(24, 20, 1.17);
+    font-weight: 700;
+    color: $dark-grey-color;
+    margin-bottom: to-rem(12);
+  }
+
+  &__desc {
+    font-size: to-rem(16);
+    font-weight: 300;
+    line-height: 1.4;
+    color: $dark-grey-color;
+    margin-bottom: to-rem(28);
+  }
+
+  &__actions {
+    @include flex(row, space-between, center, to-rem(16), wrap);
+    width: 100%;
+    margin-top: auto;
+  }
+}
